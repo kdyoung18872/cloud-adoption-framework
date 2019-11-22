@@ -16,16 +16,16 @@ Organizations often need more than one Azure subscription as a result of resourc
 
 ## Production and nonproduction workloads
 
-When deploying your first production workload in Azure, you should start with two subscriptions: one for your production environment and one for your nonproduction (dev/test) environment.
+When deploying your first production workload in Azure, you should start with three subscriptions: one for your production environment,  one for your nonproduction (dev/test) environment and one for shared services (Network Hub, Domain Controllers, Web Application Firewall, etc). By implementing this model you will reduce the number of duplicated Azure services, hence reducing costs and operational overhead.
 
 ![A basic subscription model showing keys next to boxes labeled "Production" and "Nonproduction"](../../_images/ready/basic-subscription-model.png)
 
 We recommend this approach for several reasons:
 
-- Azure has specific subscription offerings for dev/test workloads. These offerings provide discounted rates on Azure services and licensing.
-- Your production and nonproduction environments will likely have different sets of Azure policies. Using separate subscriptions makes it simple to apply each distinct policy set at the subscription level.
+- Azure has specific subscription offerings for dev/test workloads. These [Enterprise Dev/Test](https://azure.microsoft.com/en-us/offers/ms-azr-0148p/) offerings provide discounted rates on Azure services and licensing.
+- Your subscription environments will likely have different sets of Azure policies. Using separate subscriptions that fall under the same Management Group makes it simple to apply each distinct policy set at the subscription level.
 - You might want certain types of Azure resources in a dev/test subscription for testing. With a separate subscription, you can use those resource types without making them available in your production environment.
-- You can use dev/test subscriptions as isolated sandbox environments. Such sandboxes allow admins and developers to rapidly build up and tear down entire sets of Azure resources. This isolation can also help with data protection and security concerns.
+- You can use dev/test subscriptions as isolated sandbox (aka Lab) environments. Such sandboxes allow admins and developers to rapidly build up and tear down entire sets of Azure resources. This isolation can also help with data protection and security concerns.
 - Acceptable cost thresholds will likely vary between production and dev/test subscriptions.
 
 ## Other reasons for multiple subscriptions
@@ -58,11 +58,11 @@ You can move many types of resources from one subscription to another or use aut
 
 ## Manage multiple subscriptions
 
-If you have only a few subscriptions, managing them independently is relatively simple. But if you have many subscriptions, you should consider creating a management-group hierarchy to simplify managing your subscriptions and resources.
+If you have only a few subscriptions, managing them independently is relatively simple. But if you have many subscriptions, you should consider creating a Management Group hierarchy to simplify managing your subscriptions and resources.
 
 Management groups allow efficient management of access, policies, and compliance for an organization's subscriptions. Each management group is a container for one or more subscriptions.
 
-Management groups are arranged in a single hierarchy. You define this hierarchy in your Azure Active Directory (Azure AD) tenant to align with your organization's structure and needs. The top level is called the *root management group*. You can define up to six levels of management groups in your hierarchy. Each subscription is contained by only one management group.
+Management groups are arranged in a hierarchy. You define this hierarchy in your Azure Active Directory (Azure AD) tenant to align with your organization's structure and needs. The top level is called the *root management group*. You can define up to six levels of management groups in your hierarchy. Each subscription is contained by only one management group.
 
 Azure provides four levels of management scope: management groups, subscriptions, resource groups, and resources. Any access or policy applied at one level in the hierarchy is inherited by the levels below it. A resource owner or subscription owner can't alter an inherited policy. This limitation helps improve governance.
 
